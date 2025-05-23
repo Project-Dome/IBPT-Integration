@@ -5,15 +5,15 @@
 */
 
 import { EntryPoints } from 'N/types';
-import * as task from 'N/task';
-import * as log from 'N/log';
-import * as nCache from 'N/cache';
+import * as Task from 'N/task';
+import * as Log from 'N/log';
+import * as Cache from 'N/cache';
 
 
 export const get = (_context: EntryPoints.RESTlet.get) => {
     try {
-        const updateIBPT = task.create({
-            taskType: task.TaskType.MAP_REDUCE,
+        const updateIBPT = Task.create({
+            taskType: Task.TaskType.MAP_REDUCE,
             scriptId: 'customscript_pd_ib_ibpt_integration_mr',
             deploymentId: 'customdeploy_pd_ib_ibpt_integ_mr_ns',
         });
@@ -21,13 +21,9 @@ export const get = (_context: EntryPoints.RESTlet.get) => {
 
         setCacheWithTaskId(taskId);
 
-        log.debug({
-            title: 'Task ID',
-            details: taskId
-        });
+        Log.debug('Task ID',taskId);
 
-        return taskId
-
+        return taskId;
     } catch (e) {
         return {
             error: true,
@@ -38,9 +34,9 @@ export const get = (_context: EntryPoints.RESTlet.get) => {
 }
 
 export const setCacheWithTaskId = (taskId:string)=> {
-    const cache = nCache.getCache({
+    const cache = Cache.getCache({
         name: "IBPTIntegration",
-        scope: nCache.Scope.PUBLIC,
+        scope: Cache.Scope.PUBLIC,
     });
     cache.put({
         key: 'taskId',

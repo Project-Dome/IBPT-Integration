@@ -5,23 +5,20 @@
  */
 
 import * as task from 'N/task';
-import { debug } from 'N/log';
 import * as nCache from 'N/cache';
  
- 
 export function get() {
-
     const taskId = getTaskId();
-    debug('Task  checkstatus:', taskId);
-    if (taskId) {
-        const statusObj = task.checkStatus({ taskId });
-        debug('Status:', statusObj.status);
-        return {
-            status: statusObj.status
+
+    if (!taskId) 
+        return {   
+            status:''
         };
-    }
-    return {   
-        status:''
+        
+    const statusObj = task.checkStatus({ taskId });
+
+    return {
+        status: statusObj.status
     };
 }
 

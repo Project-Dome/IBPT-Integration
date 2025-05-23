@@ -1,0 +1,75 @@
+/**
+*@NApiVersion 2.1
+ @author Lucas Monaco - ProjectDome
+*/
+
+import * as Record from 'N/record';
+import * as Format from 'N/format';
+
+export const createOrUpdateEstimatedTax = (item:any, response: any, estimatedTaxId?: string) => {
+
+    let objRecord: Record.Record;
+    
+    if (estimatedTaxId) 
+        objRecord = Record.load({
+            type: 'customrecord_brl_estimated_taxes',
+            id: estimatedTaxId,
+        });
+    else 
+        objRecord = Record.create({
+            type: 'customrecord_brl_estimated_taxes',
+        });
+
+    setRecordValue(objRecord, response, item);
+
+    return objRecord.save();
+}
+ 
+
+export const setRecordValue = (objRecord: Record.Record, response: any, item:any) => {
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_d_effective_from',
+        value: Format.parse({ value: response.VigenciaInicio, type: Format.Type.DATE }),
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_d_effective_until',
+        value: Format.parse({ value: response.VigenciaFim, type: Format.Type.DATE }),
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_p_fed_txrt_dom_it',
+        value: response.Nacional,
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_p_state_txrt',
+        value: response.Estadual,
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_p_fed_txrt_imp_it',
+        value: response.Importado,
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_p_munc_txrt',
+        value: response.Municipal,
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_t_ibpt_chart_key',
+        value: response.Chave,
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_t_ibpt_chart_vers',
+        value: response.Versao,
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_t_source',
+        value: response.Fonte,
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_l_item_code',
+        value: item.itemCodesId,
+    });
+    objRecord.setValue({
+        fieldId: 'custrecord_brl_esttx_l_tp_item_code',
+        value: item.itemTypeCode,
+    });
+}
+ 
