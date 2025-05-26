@@ -4,8 +4,8 @@
  * @author Lucas Monaco - ProjectDome
  */
 
-import { error } from 'N/log';
 import { EntryPoints } from 'N/types';
+import * as Log from 'N/log';
 import * as Cache from 'N/cache';
 
 import { createOrUpdateEstimatedTax } from '../UseCases/CreateOrUpdateEstimatedTaxes';
@@ -22,6 +22,7 @@ export const getInputData: EntryPoints.MapReduce.getInputData = () => {
     allItems = allItems.map(obj => ({
         ...obj,
         accessToken: parametrization.accessToken,
+        uf: parametrization.uf,
     }));
 
     return allItems;
@@ -29,7 +30,7 @@ export const getInputData: EntryPoints.MapReduce.getInputData = () => {
 
 export const map: EntryPoints.MapReduce.map = (context) => {
     const estimatedTax = JSON.parse(context.value);
-    
+
     try {
         const response = requestIBPT(estimatedTax);
 
@@ -43,7 +44,7 @@ export const map: EntryPoints.MapReduce.map = (context) => {
             createOrUpdateEstimatedTax(estimatedTax, response);
         
     } catch (e) {
-        error({ title: 'Error in map stage', details: e });
+        Log.error({ title: 'Error in map stage', details: e });
     }
 };  
 

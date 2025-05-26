@@ -21,7 +21,7 @@ export const requestIBPT = (estimatedTax: any) => {
     const response = Https.get({
         url: url,
     });
-
+    
     if (response.code > 199 && response.code < 301) 
         return JSON.parse(response.body);
     else {
