@@ -7,15 +7,14 @@ import * as Log from 'N/log';
 import * as Https from 'N/https';
 import * as Runtime from 'N/runtime';
 
-export const requestIBPT = (estimatedTax:any) => {
+export const requestIBPT = (estimatedTax: any) => {
     let url = '';
-    const token = 'WXhNNrk-2_LhprT3rlxA1L5tXasqHc6FDGs0r3A6NzMswTTt4YqyAnaK5XuDTljZ';
     const cnpj = String(Runtime.getCurrentScript().getParameter({ name: 'custscript_pd_ib_cnpj' }));
 
     if (estimatedTax.itemType === 'product') 
-        url = buildProcuctUrl(estimatedTax, token, cnpj);
+        url = buildProcuctUrl(estimatedTax,  cnpj);
     else if (estimatedTax.itemType === 'service')
-        url = buildServiceUrl(estimatedTax, token,cnpj);
+        url = buildServiceUrl(estimatedTax, cnpj);
     else 
         throw new Error(`Invalid item type (${estimatedTax.itemType})`);
 
@@ -34,27 +33,28 @@ export const requestIBPT = (estimatedTax:any) => {
     }
 }
 
-const buildProcuctUrl = (serviceData: any, token: string, cnpj:string) => {
-    const measureUnit = 'UN'
-    const ex = 0
-    const valor = 0
-    const gtin = 'SEMGTIN'
-    const description = serviceData.description ? serviceData.description : 'Temp';
-    const codigo = serviceData.itemCod.replace(/[^\d]/g, '');
-    const uf = 'SP'
+const buildProcuctUrl = (productData: any, cnpj:string) => {
+    const measureUnit = 'UN';
+    const ex = 0;
+    const valor = 0;
+    const gtin = 'SEMGTIN';
+    const description = productData.description ? productData.description : 'Temp';
+    const codigo = productData.itemCod.replace(/[^\d]/g, '');
+    const uf = productData.uf;
     
-    const url = `https://apidoni.ibpt.org.br/api/v1/produtos?token=${encodeURIComponent(token)}&cnpj=${encodeURIComponent(cnpj)}&codigo=${encodeURIComponent(codigo)}&uf=${encodeURIComponent(uf)}&ex=${ex}&descricao=${encodeURIComponent(description)}&unidadeMedida=${encodeURIComponent(measureUnit)}&valor=${valor}&gtin=${encodeURIComponent(gtin)}&codigoInterno=0`
+    const url = `https://apidoni.ibpt.org.br/api/v1/produtos?token=${encodeURIComponent(productData.accessToken)}&cnpj=${encodeURIComponent(cnpj)}&codigo=${encodeURIComponent(codigo)}&uf=${encodeURIComponent(uf)}&ex=${ex}&descricao=${encodeURIComponent(description)}&unidadeMedida=${encodeURIComponent(measureUnit)}&valor=${valor}&gtin=${encodeURIComponent(gtin)}&codigoInterno=0`
 
     return url;
 }
 
-const buildServiceUrl = (serviceData: any, token: string, cnpj: string) => {
-    const measureUnit = 'UN'
-    const valor = 0
+const buildServiceUrl = (serviceData: any, cnpj: string) => {
+    const measureUnit = 'UN';
+    const valor = 0;
     const description = serviceData.description ? serviceData.description : 'Temp';
     const codigo = serviceData.itemCod.replace(/[^\d]/g, '');
+    const uf = serviceData.uf;
 
-    const url = `https://apidoni.ibpt.org.br/api/v1/servicos?token=${encodeURIComponent(token)}&cnpj=${encodeURIComponent(cnpj)}&codigo=${encodeURIComponent(codigo)}&uf=${encodeURIComponent(serviceData.subsidiaryData.state)}&descricao=${encodeURIComponent(description)}&unidadeMedida=${encodeURIComponent(measureUnit)}&valor=${valor}&codigoInterno=0` 
+    const url = `https://apidoni.ibpt.org.br/api/v1/servicos?token=${encodeURIComponent(serviceData.accessToken)}&cnpj=${encodeURIComponent(cnpj)}&codigo=${encodeURIComponent(codigo)}&uf=${encodeURIComponent(uf)}&descricao=${encodeURIComponent(description)}&unidadeMedida=${encodeURIComponent(measureUnit)}&valor=${valor}&codigoInterno=0` 
 
     return url;
 }

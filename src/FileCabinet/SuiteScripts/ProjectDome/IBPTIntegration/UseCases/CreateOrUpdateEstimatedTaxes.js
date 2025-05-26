@@ -29,7 +29,7 @@ define(["require", "exports", "N/record", "N/format", "N/log"], function (requir
     Format = __importStar(Format);
     Log = __importStar(Log);
     var createOrUpdateEstimatedTax = function (item, response, estimatedTaxId) {
-        Log.debug({
+        Log.audit({
             title: 'createOrUpdateEstimatedTax',
             details: "Item: " + JSON.stringify(item) + " Response: " + JSON.stringify(response) + " EstimatedTaxId: " + estimatedTaxId,
         });

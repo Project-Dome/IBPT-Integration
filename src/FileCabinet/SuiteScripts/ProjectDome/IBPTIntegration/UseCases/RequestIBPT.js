@@ -30,12 +30,11 @@ define(["require", "exports", "N/log", "N/https", "N/runtime"], function (requir
     Runtime = __importStar(Runtime);
     var requestIBPT = function (estimatedTax) {
         var url = '';
-        var token = 'WXhNNrk-2_LhprT3rlxA1L5tXasqHc6FDGs0r3A6NzMswTTt4YqyAnaK5XuDTljZ';
         var cnpj = String(Runtime.getCurrentScript().getParameter({ name: 'custscript_pd_ib_cnpj' }));
         if (estimatedTax.itemType === 'product')
-            url = buildProcuctUrl(estimatedTax, token, cnpj);
+            url = buildProcuctUrl(estimatedTax, cnpj);
         else if (estimatedTax.itemType === 'service')
-            url = buildServiceUrl(estimatedTax, token, cnpj);
+            url = buildServiceUrl(estimatedTax, cnpj);
         else
             throw new Error("Invalid item type (" + estimatedTax.itemType + ")");
         var response = Https.get({
@@ -52,23 +51,24 @@ define(["require", "exports", "N/log", "N/https", "N/runtime"], function (requir
         }
     };
     exports.requestIBPT = requestIBPT;
-    var buildProcuctUrl = function (serviceData, token, cnpj) {
+    var buildProcuctUrl = function (productData, cnpj) {
         var measureUnit = 'UN';
         var ex = 0;
         var valor = 0;
         var gtin = 'SEMGTIN';
-        var description = serviceData.description ? serviceData.description : 'Temp';
-        var codigo = serviceData.itemCod.replace(/[^\d]/g, '');
-        var uf = 'SP';
-        var url = "https://apidoni.ibpt.org.br/api/v1/produtos?token=" + encodeURIComponent(token) + "&cnpj=" + encodeURIComponent(cnpj) + "&codigo=" + encodeURIComponent(codigo) + "&uf=" + encodeURIComponent(uf) + "&ex=" + ex + "&descricao=" + encodeURIComponent(description) + "&unidadeMedida=" + encodeURIComponent(measureUnit) + "&valor=" + valor + "&gtin=" + encodeURIComponent(gtin) + "&codigoInterno=0";
+        var description = productData.description ? productData.description : 'Temp';
+        var codigo = productData.itemCod.replace(/[^\d]/g, '');
+        var uf = productData.uf;
+        var url = "https://apidoni.ibpt.org.br/api/v1/produtos?token=" + encodeURIComponent(productData.accessToken) + "&cnpj=" + encodeURIComponent(cnpj) + "&codigo=" + encodeURIComponent(codigo) + "&uf=" + encodeURIComponent(uf) + "&ex=" + ex + "&descricao=" + encodeURIComponent(description) + "&unidadeMedida=" + encodeURIComponent(measureUnit) + "&valor=" + valor + "&gtin=" + encodeURIComponent(gtin) + "&codigoInterno=0";
         return url;
     };
-    var buildServiceUrl = function (serviceData, token, cnpj) {
+    var buildServiceUrl = function (serviceData, cnpj) {
         var measureUnit = 'UN';
         var valor = 0;
         var description = serviceData.description ? serviceData.description : 'Temp';
         var codigo = serviceData.itemCod.replace(/[^\d]/g, '');
-        var url = "https://apidoni.ibpt.org.br/api/v1/servicos?token=" + encodeURIComponent(token) + "&cnpj=" + encodeURIComponent(cnpj) + "&codigo=" + encodeURIComponent(codigo) + "&uf=" + encodeURIComponent(serviceData.subsidiaryData.state) + "&descricao=" + encodeURIComponent(description) + "&unidadeMedida=" + encodeURIComponent(measureUnit) + "&valor=" + valor + "&codigoInterno=0";
+        var uf = serviceData.uf;
+        var url = "https://apidoni.ibpt.org.br/api/v1/servicos?token=" + encodeURIComponent(serviceData.accessToken) + "&cnpj=" + encodeURIComponent(cnpj) + "&codigo=" + encodeURIComponent(codigo) + "&uf=" + encodeURIComponent(uf) + "&descricao=" + encodeURIComponent(description) + "&unidadeMedida=" + encodeURIComponent(measureUnit) + "&valor=" + valor + "&codigoInterno=0";
         return url;
     };
 });

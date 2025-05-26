@@ -9,7 +9,7 @@ import * as Log from 'N/log';
 
 export const createOrUpdateEstimatedTax = (item: any, response: any, estimatedTaxId?: string) => {
 
-    Log.debug({
+    Log.audit({
         title: 'createOrUpdateEstimatedTax',
         details: `Item: ${JSON.stringify(item)} Response: ${JSON.stringify(response)} EstimatedTaxId: ${estimatedTaxId}`,
     });

@@ -6,13 +6,17 @@
 import * as Search from 'N/search';
 
 export const getParameterization = () => {
-    const subsidiary = Search.create({
+    const parametrization = Search.create({
         type: 'customrecord_pd_ib_parameterization',
-        columns: ['customrecord_pd_ib_uf'],
+        columns: [
+            'custrecord_pd_ib_uf',
+            'custrecord_pd_ib_access_token'
+        ],
     }).run().getRange({ start: 0, end: 1 })[0];
 
     return {
-        uf: subsidiary.getValue({ name: 'customrecord_pd_ib_uf' }),
-        id: subsidiary.id,
+        id: parametrization.id,
+        uf: parametrization.getValue('custrecord_pd_ib_uf'),
+        accessToken: parametrization.getValue('custrecord_pd_ib_access_token'),
     };
 }

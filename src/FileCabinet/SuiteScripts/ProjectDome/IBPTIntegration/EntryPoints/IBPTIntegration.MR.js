@@ -3,6 +3,17 @@
  * @NScriptType MapReduceScript
  * @author Lucas Monaco - ProjectDome
  */
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
@@ -22,13 +33,16 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-define(["require", "exports", "N/log", "../UseCases/CreateOrUpdateEstimatedTaxes", "../UseCases/GetAllItems", "../UseCases/RequestIBPT", "N/cache"], function (require, exports, log_1, CreateOrUpdateEstimatedTaxes_1, GetAllItems_1, RequestIBPT_1, Cache) {
+define(["require", "exports", "N/log", "N/cache", "../UseCases/CreateOrUpdateEstimatedTaxes", "../UseCases/GetAllItems", "../UseCases/RequestIBPT", "../UseCases/GetParameterization"], function (require, exports, log_1, Cache, CreateOrUpdateEstimatedTaxes_1, GetAllItems_1, RequestIBPT_1, GetParameterization_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.summarize = exports.map = exports.getInputData = void 0;
     Cache = __importStar(Cache);
     var getInputData = function () {
-        return (0, GetAllItems_1.getAllItems)();
+        var parametrization = (0, GetParameterization_1.getParameterization)();
+        var allItems = (0, GetAllItems_1.getAllItems)();
+        allItems = allItems.map(function (obj) { return (__assign(__assign({}, obj), { accessToken: parametrization.accessToken })); });
+        return allItems;
     };
     exports.getInputData = getInputData;
     var map = function (context) {

@@ -6,18 +6,30 @@
 
 import { error } from 'N/log';
 import { EntryPoints } from 'N/types';
+import * as Cache from 'N/cache';
+
 import { createOrUpdateEstimatedTax } from '../UseCases/CreateOrUpdateEstimatedTaxes';
 import { getAllItems } from '../UseCases/GetAllItems';
 import { requestIBPT } from '../UseCases/RequestIBPT';
-import * as Cache from 'N/cache';
+import { getParameterization } from '../UseCases/GetParameterization';
 
 export const getInputData: EntryPoints.MapReduce.getInputData = () => { 
-    return getAllItems();
+
+    const parametrization = getParameterization();
+
+    let allItems =  getAllItems();
+
+    allItems = allItems.map(obj => ({
+        ...obj,
+        accessToken: parametrization.accessToken,
+    }));
+
+    return allItems;
 };
 
 export const map: EntryPoints.MapReduce.map = (context) => {
     const estimatedTax = JSON.parse(context.value);
-
+    
     try {
         const response = requestIBPT(estimatedTax);
 
