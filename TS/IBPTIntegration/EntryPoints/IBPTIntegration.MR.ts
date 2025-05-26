@@ -34,11 +34,13 @@ export const map: EntryPoints.MapReduce.map = (context) => {
 };  
 
 export const summarize: EntryPoints.MapReduce.summarize = (_context) => {
+    clearTaskIdCache();
+}
+
+const clearTaskIdCache = () => {
     const cache = Cache.getCache({
         name: "IBPTIntegration",
         scope: Cache.Scope.PUBLIC,
     });
-    cache.remove({ 
-        key: 'taskId' 
-    });
+    cache.remove({ key: 'taskId' });
 }

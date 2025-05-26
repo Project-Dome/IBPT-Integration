@@ -16,7 +16,7 @@ export const beforeLoad: EntryPoints.UserEvent.beforeLoad = (context) => {
         form.clientScriptModulePath = './IBPTButton.CS';
 
         const taskStatus = getStatus();
-        
+        error('taskStatus', taskStatus);
         if (taskStatus === 'Processing') 
             Message.create({
                 title: "Aguarde",

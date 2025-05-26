@@ -6,7 +6,7 @@
   <notifyemails></notifyemails>
   <notifyowner>T</notifyowner>
   <notifyuser>F</notifyuser>
-  <scriptfile>[/SuiteScripts/project_dome/IBPTIntegration/EntryPoints/IBPTButton.CS.js]</scriptfile>
+  <scriptfile>[/SuiteScripts/ProjectDome/IBPTIntegration/EntryPoints/IBPTButton.CS.js]</scriptfile>
   <scriptdeployments>
     <scriptdeployment scriptid="customdeploy_pd_ib_update_ibpt_cs">
       <allemployees>T</allemployees>

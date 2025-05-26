@@ -5,7 +5,7 @@
   <notifyadmins>F</notifyadmins>
   <notifyemails></notifyemails>
   <notifyowner>T</notifyowner>
-  <scriptfile>[/SuiteScripts/project_dome/IBPTIntegration/EntryPoints/IBPTIntegration.MR.js]</scriptfile>
+  <scriptfile>[/SuiteScripts/ProjectDome/IBPTIntegration/EntryPoints/IBPTIntegration.MR.js]</scriptfile>
   <scriptcustomfields>
     <scriptcustomfield scriptid="custscript_pd_ib_cnpj">
       <accesslevel>2</accesslevel>

@@ -27,6 +27,8 @@ const getTaskId = () => {
         name: "IBPTIntegration",
         scope: nCache.Scope.PUBLIC,
     });
+    
     const taskId = cache.get({ key: 'taskId' });
+
     return taskId;
 }

@@ -6,9 +6,7 @@
 
 import { EntryPoints } from 'N/types';
 import * as Task from 'N/task';
-import * as Log from 'N/log';
 import * as Cache from 'N/cache';
-
 
 export const get = (_context: EntryPoints.RESTlet.get) => {
     try {
@@ -20,8 +18,6 @@ export const get = (_context: EntryPoints.RESTlet.get) => {
         const taskId = updateIBPT.submit();
 
         setCacheWithTaskId(taskId);
-
-        Log.debug('Task ID',taskId);
 
         return taskId;
     } catch (e) {

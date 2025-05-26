@@ -69,8 +69,7 @@ const getItemCode = () => {
         page.data.forEach((result) => {
             itemCode.push({
                 id: result.id,
-                itemCod: String(result.getValue({name: 'custrecord_fte_itemcode_t_code'})).replace(/[^a-zA-Z0-9]/g, ''),
- 
+                itemCod: String(result.getValue({name: 'custrecord_fte_itemcode_t_code'})).replace(/[^a-zA-Z0-9]/g, '')
             });
         });
     });
