@@ -21,13 +21,18 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-define(["require", "exports", "N/record", "N/format"], function (require, exports, Record, Format) {
+define(["require", "exports", "N/record", "N/format", "N/log"], function (require, exports, Record, Format, Log) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.createOrUpdateEstimatedTax = void 0;
     Record = __importStar(Record);
     Format = __importStar(Format);
+    Log = __importStar(Log);
     var createOrUpdateEstimatedTax = function (item, response, estimatedTaxId) {
+        Log.debug({
+            title: 'createOrUpdateEstimatedTax',
+            details: "Item: " + JSON.stringify(item) + " Response: " + JSON.stringify(response) + " EstimatedTaxId: " + estimatedTaxId,
+        });
         var objRecord;
         if (estimatedTaxId)
             objRecord = Record.load({

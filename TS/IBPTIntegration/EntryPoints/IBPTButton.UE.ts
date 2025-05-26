@@ -13,16 +13,17 @@ import * as Task from 'N/task';
 export const beforeLoad: EntryPoints.UserEvent.beforeLoad = (context) => {
     try {
         const { form } = context;
+        
         form.clientScriptModulePath = './IBPTButton.CS';
 
         const taskStatus = getStatus();
-        error('taskStatus', taskStatus);
-        if (taskStatus === 'Processing') 
-            Message.create({
-                title: "Aguarde",
-                message: "Aguarde, o processo de atualização de impostos está em andamento.", 
-                type: Message.Type.CONFIRMATION
-            })
+
+        if (taskStatus === Task.TaskStatus.PROCESSING) 
+            form.addPageInitMessage({
+                type: Message.Type.INFORMATION,
+                title: 'Atualização em andamento',
+                message: 'A atualização dos impostos está em andamento. Por favor, aguarde a conclusão.',
+            });
         else 
             form.addButton({
                 id: 'custpage_ibpt_button',
@@ -43,6 +44,8 @@ const getStatus = () => {
     const taskId = cache.get({ key: 'taskId' });
 
     if (!taskId) return '';
-    
-    return String(Task.checkStatus({ taskId: taskId }));
+
+    const taskStatus = Task.checkStatus({ taskId: taskId })
+
+    return String(taskStatus.status);
 }

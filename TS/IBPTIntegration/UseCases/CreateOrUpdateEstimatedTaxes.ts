@@ -5,8 +5,14 @@
 
 import * as Record from 'N/record';
 import * as Format from 'N/format';
+import * as Log from 'N/log';
 
-export const createOrUpdateEstimatedTax = (item:any, response: any, estimatedTaxId?: string) => {
+export const createOrUpdateEstimatedTax = (item: any, response: any, estimatedTaxId?: string) => {
+
+    Log.debug({
+        title: 'createOrUpdateEstimatedTax',
+        details: `Item: ${JSON.stringify(item)} Response: ${JSON.stringify(response)} EstimatedTaxId: ${estimatedTaxId}`,
+    });
 
     let objRecord: Record.Record;
     
@@ -26,7 +32,7 @@ export const createOrUpdateEstimatedTax = (item:any, response: any, estimatedTax
 }
  
 
-const setRecordValue = (objRecord: Record.Record, response: any, item:any) => {
+const setRecordValue = (objRecord: Record.Record, response: any, item: any) => {
     objRecord.setValue({
         fieldId: 'custrecord_brl_esttx_d_effective_from',
         value: Format.parse({ value: response.VigenciaInicio, type: Format.Type.DATE }),

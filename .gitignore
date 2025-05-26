@@ -38,3 +38,6 @@ Thumbs.db
 
 # Project config
 project.json
+
+# Build directories
+src/FileCabinet

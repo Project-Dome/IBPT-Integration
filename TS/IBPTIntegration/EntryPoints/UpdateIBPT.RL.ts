@@ -6,6 +6,7 @@
 
 import { EntryPoints } from 'N/types';
 import * as Task from 'N/task';
+import * as Log from 'N/log';
 import * as Cache from 'N/cache';
 
 export const get = (_context: EntryPoints.RESTlet.get) => {
@@ -29,9 +30,10 @@ export const get = (_context: EntryPoints.RESTlet.get) => {
     }
 }
 
-export const setCacheWithTaskId = (taskId:string)=> {
+export const setCacheWithTaskId = (taskId: string)=> { 
+    Log.debug('taskId', taskId);
     const cache = Cache.getCache({
-        name: "IBPTIntegration",
+        name: 'IBPTIntegration',
         scope: Cache.Scope.PUBLIC,
     });
     cache.put({

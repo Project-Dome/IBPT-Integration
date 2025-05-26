@@ -57,7 +57,7 @@ define(["require", "exports", "N/log", "N/https", "N/runtime"], function (requir
         var ex = 0;
         var valor = 0;
         var gtin = 'SEMGTIN';
-        var description = serviceData.description ? serviceData.description : 'teste';
+        var description = serviceData.description ? serviceData.description : 'Temp';
         var codigo = serviceData.itemCod.replace(/[^\d]/g, '');
         var uf = 'SP';
         var url = "https://apidoni.ibpt.org.br/api/v1/produtos?token=" + encodeURIComponent(token) + "&cnpj=" + encodeURIComponent(cnpj) + "&codigo=" + encodeURIComponent(codigo) + "&uf=" + encodeURIComponent(uf) + "&ex=" + ex + "&descricao=" + encodeURIComponent(description) + "&unidadeMedida=" + encodeURIComponent(measureUnit) + "&valor=" + valor + "&gtin=" + encodeURIComponent(gtin) + "&codigoInterno=0";
@@ -66,7 +66,7 @@ define(["require", "exports", "N/log", "N/https", "N/runtime"], function (requir
     var buildServiceUrl = function (serviceData, token, cnpj) {
         var measureUnit = 'UN';
         var valor = 0;
-        var description = serviceData.description ? serviceData.description : 'teste';
+        var description = serviceData.description ? serviceData.description : 'Temp';
         var codigo = serviceData.itemCod.replace(/[^\d]/g, '');
         var url = "https://apidoni.ibpt.org.br/api/v1/servicos?token=" + encodeURIComponent(token) + "&cnpj=" + encodeURIComponent(cnpj) + "&codigo=" + encodeURIComponent(codigo) + "&uf=" + encodeURIComponent(serviceData.subsidiaryData.state) + "&descricao=" + encodeURIComponent(description) + "&unidadeMedida=" + encodeURIComponent(measureUnit) + "&valor=" + valor + "&codigoInterno=0";
         return url;

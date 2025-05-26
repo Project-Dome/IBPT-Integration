@@ -28,14 +28,15 @@ define(["require", "exports", "N/log", "../UseCases/CreateOrUpdateEstimatedTaxes
     exports.summarize = exports.map = exports.getInputData = void 0;
     Cache = __importStar(Cache);
     var getInputData = function () {
-        var teste = [(0, GetAllItems_1.getAllItems)()[0]];
-        return teste;
+        return (0, GetAllItems_1.getAllItems)();
     };
     exports.getInputData = getInputData;
     var map = function (context) {
         var estimatedTax = JSON.parse(context.value);
         try {
             var response = (0, RequestIBPT_1.requestIBPT)(estimatedTax);
+            if (!response.Codigo)
+                return;
             var isUpdated = estimatedTax.id == null;
             if (isUpdated)
                 (0, CreateOrUpdateEstimatedTaxes_1.createOrUpdateEstimatedTax)(estimatedTax, response, estimatedTax.estimatedTaxId);

@@ -12,8 +12,7 @@ import { requestIBPT } from '../UseCases/RequestIBPT';
 import * as Cache from 'N/cache';
 
 export const getInputData: EntryPoints.MapReduce.getInputData = () => { 
-    const teste = [getAllItems()[0]];
-    return teste;
+    return getAllItems();
 };
 
 export const map: EntryPoints.MapReduce.map = (context) => {
@@ -21,6 +20,9 @@ export const map: EntryPoints.MapReduce.map = (context) => {
 
     try {
         const response = requestIBPT(estimatedTax);
+
+        if (!response.Codigo) return;
+
         const isUpdated = estimatedTax.id == null;
 
         if (isUpdated) 

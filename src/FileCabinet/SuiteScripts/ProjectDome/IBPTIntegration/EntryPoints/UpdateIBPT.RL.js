@@ -22,11 +22,12 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-define(["require", "exports", "N/task", "N/cache"], function (require, exports, Task, Cache) {
+define(["require", "exports", "N/task", "N/log", "N/cache"], function (require, exports, Task, Log, Cache) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.setCacheWithTaskId = exports.get = void 0;
     Task = __importStar(Task);
+    Log = __importStar(Log);
     Cache = __importStar(Cache);
     var get = function (_context) {
         try {
@@ -49,8 +50,9 @@ define(["require", "exports", "N/task", "N/cache"], function (require, exports, 
     };
     exports.get = get;
     var setCacheWithTaskId = function (taskId) {
+        Log.debug('taskId', taskId);
         var cache = Cache.getCache({
-            name: "IBPTIntegration",
+            name: 'IBPTIntegration',
             scope: Cache.Scope.PUBLIC,
         });
         cache.put({

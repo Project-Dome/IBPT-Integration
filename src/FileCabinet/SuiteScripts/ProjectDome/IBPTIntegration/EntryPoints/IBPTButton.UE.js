@@ -34,12 +34,11 @@ define(["require", "exports", "N/log", "N/ui/message", "N/cache", "N/task"], fun
             var form = context.form;
             form.clientScriptModulePath = './IBPTButton.CS';
             var taskStatus = getStatus();
-            (0, log_1.error)('taskStatus', taskStatus);
-            if (taskStatus === 'Processing')
-                Message.create({
-                    title: "Aguarde",
-                    message: "Aguarde, o processo de atualização de impostos está em andamento.",
-                    type: Message.Type.CONFIRMATION
+            if (taskStatus === Task.TaskStatus.PROCESSING)
+                form.addPageInitMessage({
+                    type: Message.Type.INFORMATION,
+                    title: 'Atualização em andamento',
+                    message: 'A atualização dos impostos está em andamento. Por favor, aguarde a conclusão.',
                 });
             else
                 form.addButton({
@@ -61,6 +60,7 @@ define(["require", "exports", "N/log", "N/ui/message", "N/cache", "N/task"], fun
         var taskId = cache.get({ key: 'taskId' });
         if (!taskId)
             return '';
-        return String(Task.checkStatus({ taskId: taskId }));
+        var taskStatus = Task.checkStatus({ taskId: taskId });
+        return String(taskStatus.status);
     };
 });

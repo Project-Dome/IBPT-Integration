@@ -18,7 +18,7 @@ export const requestIBPT = (estimatedTax:any) => {
         url = buildServiceUrl(estimatedTax, token,cnpj);
     else 
         throw new Error(`Invalid item type (${estimatedTax.itemType})`);
-    
+
     const response = Https.get({
         url: url,
     });
@@ -39,7 +39,7 @@ const buildProcuctUrl = (serviceData: any, token: string, cnpj:string) => {
     const ex = 0
     const valor = 0
     const gtin = 'SEMGTIN'
-    const description = serviceData.description ? serviceData.description : 'teste';
+    const description = serviceData.description ? serviceData.description : 'Temp';
     const codigo = serviceData.itemCod.replace(/[^\d]/g, '');
     const uf = 'SP'
     
@@ -51,7 +51,7 @@ const buildProcuctUrl = (serviceData: any, token: string, cnpj:string) => {
 const buildServiceUrl = (serviceData: any, token: string, cnpj: string) => {
     const measureUnit = 'UN'
     const valor = 0
-    const description = serviceData.description ? serviceData.description : 'teste';
+    const description = serviceData.description ? serviceData.description : 'Temp';
     const codigo = serviceData.itemCod.replace(/[^\d]/g, '');
 
     const url = `https://apidoni.ibpt.org.br/api/v1/servicos?token=${encodeURIComponent(token)}&cnpj=${encodeURIComponent(cnpj)}&codigo=${encodeURIComponent(codigo)}&uf=${encodeURIComponent(serviceData.subsidiaryData.state)}&descricao=${encodeURIComponent(description)}&unidadeMedida=${encodeURIComponent(measureUnit)}&valor=${valor}&codigoInterno=0` 
