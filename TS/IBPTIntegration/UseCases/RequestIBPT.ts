@@ -44,12 +44,6 @@ const buildProcuctUrl = (productData: any, cnpj: string) => {
 
     const url = `https://apidoni.ibpt.org.br/api/v1/produtos?token=${encodeURIComponent(productData.accessToken)}&cnpj=${encodeURIComponent(cnpj)}&codigo=${encodeURIComponent(codigo)}&uf=${encodeURIComponent(uf)}&ex=${ex}&descricao=${encodeURIComponent(description)}&unidadeMedida=${encodeURIComponent(measureUnit)}&valor=${valor}&gtin=${encodeURIComponent(gtin)}&codigoInterno=0`
 
-
-    Log.debug({
-        title: `${codigo}`,
-        details: `URL Product: ${url}`
-    });
-
     return url;
 }
 
@@ -61,11 +55,6 @@ const buildServiceUrl = (serviceData: any, cnpj: string) => {
     const uf = serviceData.uf;
 
     const url = `https://apidoni.ibpt.org.br/api/v1/servicos?token=${encodeURIComponent(serviceData.accessToken)}&cnpj=${encodeURIComponent(cnpj)}&codigo=${encodeURIComponent(codigo)}&uf=${encodeURIComponent(uf)}&descricao=${encodeURIComponent(description)}&unidadeMedida=${encodeURIComponent(measureUnit)}&valor=${valor}&codigoInterno=0`
-
-    Log.debug({
-        title: `${codigo}`,
-        details: `URL Service: ${url}`
-    });
 
     return url;
 }
