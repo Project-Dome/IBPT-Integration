@@ -4,17 +4,25 @@
  *@author Lucas Monaco - ProjectDome
 */
 
-import { EntryPoints } from 'N/types';
 import * as Task from 'N/task';
 import * as Log from 'N/log';
 import * as Cache from 'N/cache';
 
-export const get = (_context: EntryPoints.RESTlet.get) => {
+export const post = (context: any) => {
     try {
+        Log.debug('context', context);
+        
+        const estimatedTaxId = JSON.parse(context).estimatedTaxId;
+
+        Log.debug('estimatedTaxId', estimatedTaxId);
+
         const updateIBPT = Task.create({
             taskType: Task.TaskType.MAP_REDUCE,
             scriptId: 'customscript_pd_ib_ibpt_integration_mr',
             deploymentId: 'customdeploy_pd_ib_ibpt_integ_mr_ns',
+            params: {
+                custscript_pd_ib_estimated_taxes_id: estimatedTaxId,
+            },
         });
         const taskId = updateIBPT.submit();
 

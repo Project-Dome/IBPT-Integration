@@ -12,14 +12,20 @@ import * as Dialog from 'N/ui/dialog';
 
 export const pageInit = (_context: EntryPoints.Client.pageInit) => { }
 
-export const updateTaxesVersion = () => {
+export const updateTaxesVersion = (estimatedTaxId: string) => {
     try {
+
         const restletUrl = URL.resolveScript({
             scriptId: 'customscript_pd_ib_update_ibpt',
             deploymentId: 'customdeploy_pd_ib_update_ibpt',
         });
 
-        const response = https.get({
+        console.log('estimatedTaxId', estimatedTaxId)
+
+        const response = https.post({
+            body: JSON.stringify({
+                estimatedTaxId: estimatedTaxId,
+            }),
             url: restletUrl,
         })
 

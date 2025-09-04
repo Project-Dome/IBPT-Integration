@@ -10,7 +10,7 @@ import * as Message from 'N/ui/message';
 import * as Cache from 'N/cache';
 import * as Task from 'N/task';
  
-export const beforeLoad: EntryPoints.UserEvent.beforeLoad = (context) => {
+export const beforeLoad: EntryPoints.UserEvent.beforeLoad = (context: EntryPoints.UserEvent.beforeLoadContext ) => {
     try {
         const { form } = context;
         
@@ -28,7 +28,7 @@ export const beforeLoad: EntryPoints.UserEvent.beforeLoad = (context) => {
             form.addButton({
                 id: 'custpage_ibpt_button',
                 label: 'Atualizar Versão dos Impostos',
-                functionName: 'updateTaxesVersion',
+                functionName: 'updateTaxesVersion(' +context.newRecord.id+ ')',
             });
     } catch (e) {
         error('beforeLoad error', e);
