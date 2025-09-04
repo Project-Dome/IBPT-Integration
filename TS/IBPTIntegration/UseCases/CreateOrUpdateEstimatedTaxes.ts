@@ -9,13 +9,7 @@ import * as Log from 'N/log';
 //import * as Search from 'N/search';
 
 export const createOrUpdateEstimatedTax = (item: any, response: any, estimatedTaxId?: string) => {
-
-    Log.audit({
-        title: 'createOrUpdateEstimatedTax',
-        details: `Item: ${JSON.stringify(item)} Response: ${JSON.stringify(response)} EstimatedTaxId: ${estimatedTaxId}`,
-    });
     //const searchResult = getExistingEstimatedTaxIdByItemCode(item.itemCodesId);
-
     const today = new Date();
     let objRecord;
 
@@ -23,10 +17,6 @@ export const createOrUpdateEstimatedTax = (item: any, response: any, estimatedTa
         const vigenciaFim = item.vigenciaFim ? new Date(item.vigenciaFim) : null;
 
         if (vigenciaFim && vigenciaFim >= today) {
-            Log.audit({
-                title: 'EstimatedTax ainda válido, ignorando atualização',
-                details: `ItemCod: ${item.itemCod} | Vigência Fim: ${vigenciaFim}`,
-            });
             return null;
         }
 
@@ -43,11 +33,6 @@ export const createOrUpdateEstimatedTax = (item: any, response: any, estimatedTa
     setRecordValue(objRecord, response, item);
 
     const savedId = objRecord.save();
-
-    Log.audit({
-        title: estimatedTaxId ? 'Atualizado' : 'Criado',
-        details: `Registro ID: ${savedId}`
-    });
 
     return savedId;
 };
