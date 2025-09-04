@@ -12,12 +12,7 @@ import * as Dialog from 'N/ui/dialog';
 
 export const pageInit = (_context: EntryPoints.Client.pageInit) => { }
 
-<<<<<<< HEAD
 export const updateTaxesVersion = (estimatedTaxId: string) => {
-=======
-export const updateTaxesVersion = () => {
-    
->>>>>>> 236111af0ab2b8d6e9667f57dddb9be29f535242
     try {
 
         const restletUrl = URL.resolveScript({
