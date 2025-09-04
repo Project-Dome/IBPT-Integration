@@ -13,6 +13,7 @@ import * as Dialog from 'N/ui/dialog';
 export const pageInit = (_context: EntryPoints.Client.pageInit) => { }
 
 export const updateTaxesVersion = () => {
+    
     try {
         const restletUrl = URL.resolveScript({
             scriptId: 'customscript_pd_ib_update_ibpt',
